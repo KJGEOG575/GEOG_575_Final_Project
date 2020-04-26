@@ -35,6 +35,7 @@
 
 	<header class="header">
 		<h1><i>FOREST FIRE VISUALIZER</i></h1>
+        <img src="img/Forest-Service-Logo.png" alt="Forest Service Shield" align="middle" width="46" height="50">
 		<button id="header-button" class="header-button">Links</button>
 	</header>
 
@@ -60,8 +61,19 @@
 			<div id="chart-container" class="chart-container"></div>
 			<button class="accordion">Section 1</button>
 			<div class="panel">
-				<p class="panelcontent">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p class="panelcontent">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <img src="img/wildfire_acres_burned.png" alt="NIFC Bar Graph" align="middle" width="auto" height="auto">labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
+            <div id="toggleContainer">
+               <table class="fire-poly-toggle">
+                  <tr>
+                     <td><label class="switch">
+                        <input id="fires_toggle" type="checkbox">
+                        <div class="slider round"></div>
+                     </label></td>
+                     <td>Forest Fire Polygons</td>
+                  </tr>
+               </table>
+            </div>
 
 			<button class="accordion">Section 2</button>
 			<div class="panel">
