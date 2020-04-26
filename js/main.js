@@ -8,9 +8,9 @@ function initialize(){
     var $dataSplash = $('.data-page-splash');
     var $dataCloseButton = $('#data-close-btn');
     
-    var $firesCheckbox = $('#fires_toggle');
+/*    var $firesCheckbox = $('#fires_toggle');
     
-        $firesCheckbox.click(function () {
+        $acc.click(function () {
         if (this.checked) {
             d3.selectAll(".fire-polygons").attr("opacity", 1);
             console.log("fires should be visible");
@@ -18,7 +18,7 @@ function initialize(){
         d3.selectAll(".fire-polygons").attr("opacity", 0);
         console.log("fires should be invisible");
             }
-        });
+        });*/
 
     $splashCloseButton.click(function () {
         $splash.fadeOut('slow');
@@ -33,7 +33,7 @@ function initialize(){
     });
 
     $dataMenuItem.click(function() {
-        $()
+        
         $dataSplash.fadeIn('slow');
     });
 
@@ -41,17 +41,39 @@ function initialize(){
         $headerDropdownMenu.slideToggle();
     });
 
-    var acc = document.getElementsByClassName("accordion");
+    var acc1 = document.getElementsByClassName("accordionSection1");
     var i;
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
+    for (i = 0; i < acc1.length; i++) {
+        acc1[i].addEventListener("click", function() {
             this.classList.toggle("active");
             var panel = this.nextElementSibling;
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
+                d3.selectAll(".selectStates").attr("opacity", 0);
+                
             } else {
                 panel.style.maxHeight = panel.scrollHeight + "px";
+                d3.selectAll(".selectStates").attr("opacity", 1);
+                
+            }
+        });
+}
+
+
+    var acc2 = document.getElementsByClassName("accordionSection2");
+    var j;
+
+    for (j = 0; j < acc2.length; j++) {
+        acc2[j].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+                d3.selectAll(".fire-polygons").attr("opacity", 0);
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+                d3.selectAll(".fire-polygons").attr("opacity", 1);
             }
         });
 }};
