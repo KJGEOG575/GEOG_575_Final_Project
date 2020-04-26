@@ -102,8 +102,10 @@
 			setChart(csvData, colorScale);
 
 			createDropdown(csvData);
+            
+            toggleFires(path, g, firePolygons);
 
-            setFirePolys(firePolygons, g, path)
+           
 
 		};
 	};   // end of setMap()
@@ -225,17 +227,26 @@
 			.text('{"stroke": "#000", "stroke-width": "0.5px"}');
 	};
 
-    function setFirePolys(firePolygons, map, path){
-            var fires = map.selectAll(".firePolygons")
-			 	.data(firePolygons)
-			 	.enter()
-			 	.append("path")
-			 	.attr("class", function (d) {
-			 		return "firesPolygons " + d.properties.FireName;
-			 	})
-			 	.attr("d", path);
-    };
-    
+
+        //define function to toggle fire polygons 
+        function toggleFires(path, map, firePolygons) {
+           var fires = map.append("g");
+            
+           console.log(fires);
+            
+           fires.selectAll("path")
+              .data(firePolygons)
+              .enter()
+              .append("path")
+              .attr("fill", "#000")
+              .attr("stroke", "#999")
+              .attr("d", path)
+              .attr("class", "fire-polygons")
+              .attr("opacity", 0);
+            
+           console.log(fires);
+        };
+
 
 
 	//function to test for data value and return color
@@ -435,7 +446,7 @@
 			.remove();
 	};
 
-	//function to create dynamic label
+	//function to create dynamic label for states
 	function setLabel(props){
 		//label content
 		var labelAttribute = "<h2>" + props[expressed] +
@@ -476,6 +487,7 @@
 			.style("left", x + "px")
 			.style("top", y + "px");
 	};
+
 
 
 
