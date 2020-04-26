@@ -212,6 +212,7 @@
 				return "selectStates " + d.properties.NAME;
 			})
 			.attr("d", path)
+            .attr("opacity", 0)
 			.style("fill", function (d) {
 				return choropleth(d.properties, colorScale);
 		})
