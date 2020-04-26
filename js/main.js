@@ -7,6 +7,18 @@ function initialize(){
     var $dataMenuItem = $('#data-menu-item');
     var $dataSplash = $('.data-page-splash');
     var $dataCloseButton = $('#data-close-btn');
+    
+    var $firesCheckbox = $('#fires_toggle');
+    
+        $firesCheckbox.click(function () {
+        if (this.checked) {
+            d3.selectAll(".fire-polygons").attr("opacity", 1);
+            console.log("fires should be visible");
+            } else {
+        d3.selectAll(".fire-polygons").attr("opacity", 0);
+        console.log("fires should be invisible");
+            }
+        });
 
     $splashCloseButton.click(function () {
         $splash.fadeOut('slow');
