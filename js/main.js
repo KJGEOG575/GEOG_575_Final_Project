@@ -78,4 +78,4 @@ function initialize(){
         });
 }};
 
-$(document).ready(initialize);
+$(document).ready(initialize); 
