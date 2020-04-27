@@ -2,13 +2,17 @@
 (function() {
 
 	var attrArray = ["2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010"];
+    var costAttrArray = ["Structures", "Fatalities", "EconomicCo"];
+
 
 	var expressed = attrArray[0]; //initial attribute
+    var costExpressed = costAttrArray[2]; //initial attribute
+
 
 	//chart frame dimensions
-	var chartWidth = window.innerWidth * 0.26,
-		chartHeight = 350,
-		leftPadding = 25,
+	var chartWidth = window.innerWidth * 0.25,
+		chartHeight = 500,
+		leftPadding = 35,
 		rightPadding = 2,
 		topBottomPadding = 5,
 		chartInnerWidth = chartWidth - leftPadding - rightPadding,
@@ -18,7 +22,8 @@
 	//create a scale to size bars proportionally to frame and for axis
 	var yScale = d3.scaleLinear()
 		.range([463, 0])
-		.domain([0, 1000]);
+		.domain([0, 3000]);
+
 
 	var zoomSettings = {
 		duration: 1000,
@@ -34,7 +39,7 @@
 
 		//map frame dimensions
 		var width = window.innerWidth * 0.7,
-			height = 585;
+			height = window.innerHeight * 1;
 
 		//create new svg container for the map
 		var map = d3.select("#map-container")
@@ -51,10 +56,10 @@
 
 		//create geoconicconformal conic projection centered on US
 		var projection = d3.geoAlbers()
-			.center([-15, 40])
-			.rotate([90, 0])
+			.center([-5, 37])
+			.rotate([97, 0])
 			.parallels([40, 45])
-			.scale(900)
+			.scale(1600)
 			.translate([width / 2, height / 2]);
 
 		//create path generator
@@ -105,7 +110,8 @@
             
             toggleFires(path, g, firePolygons);
 
-           
+            
+            createCostFireDropdown(firePolygons)         
 
 		};
 	};   // end of setMap()
@@ -262,10 +268,10 @@
 		};
 	};
 
-	// function to create a dropdown menu for attribute selection
+	// function to create a dropdown menu for attribute selection for states
 	function createDropdown(csvData) {
 		//add select element
-		var dropdown = d3.select(".map-container")
+		var dropdown = d3.select(".year-dropdown")
 			.append("select")
 			.attr("class", "dropdown")
 			.on("change", function(){
@@ -279,7 +285,7 @@
 			.text("Select Year");
 
 		//add attribute name options
-		var attrOptions = dropdown.selectAll("attrOptions")
+		var attrOptionsState = dropdown.selectAll("attrOptionsState")
 			.data(attrArray)
 			.enter()
 			.append("option")
@@ -287,7 +293,31 @@
 			.text(function (d) {return d});
 
 	};
+	// function to create a dropdown menu for attribute selection for cost fire polys
+	function createCostFireDropdown(firePolygons) {
+		//add select element
+		var dropdown = d3.select(".cost-dropdown")
+			.append("select")
+			.attr("class", "dropdown")
+			.on("change", function(){
+				changeAttribute(this.value, firePolygons)
+			});
 
+		//add initial option
+		var titleOption = dropdown.append("option")
+			.attr("class", "titleOption")
+			.attr("disabled", "true")
+			.text("Select Damage");
+
+		//add attribute name options
+		var attrOptionsCost = dropdown.selectAll("attrOptionsCost")
+			.data(costAttrArray)
+			.enter()
+			.append("option")
+			.attr("value", function(d) {return d})
+			.text(function (d) {return d});
+
+	};
 
 	//dropdown change listener handler
 	function changeAttribute(attribute, csvData){
@@ -345,7 +375,7 @@
 		});
 
 		var chartTitle = d3.select(".chartTitle")
-            .text ( "High risk states " + expressed.replace(/_/g, " ") + "\n wildfire destruction in total square miles");
+            .text (expressed.replace(/_/g, " ") + "\n Wildfire Destruction in Total square miles");
 			/*.text(expressed.replace(/_/g, " "));*/
 	};
 
@@ -378,7 +408,7 @@
 			.attr("class", function(d){
 				return "bar " + d.NAME;
 			})
-			.attr("width", chartInnerWidth / csvData.length - 1)
+			.attr("width", chartInnerWidth / csvData.length -1)
 			.on("mouseover", highlight)
 			.on("mouseout", dehighlight)
 			.on("mousemove", moveLabel);
@@ -386,7 +416,7 @@
 
 		//create a text element for the chart title
 		var chartTitle = chart.append("text")
-			.attr("x", 35)
+			.attr("x", 100)
 			.attr("y", 30)
 			.attr("class", "chartTitle");
 
