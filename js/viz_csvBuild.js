@@ -400,8 +400,8 @@
 		//make sure attribute value is a number
 		var valCost = parseFloat(props2[costExpressed]);
 		//if attribute value exists, assign a color, otherwise assign gray
-		if (typeof val == 'number' && !isNaN(val)) {
-			return colorScale(val);
+		if (typeof valCost == 'number' && !isNaN(valCost)) {
+			return colorScaleCost(valCost);
 		} else {
 			return "#CCC";
 		};
