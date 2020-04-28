@@ -111,7 +111,7 @@
             toggleFires(path, g, firePolygons);
 
             
-            createCostFireDropdown(firePolygons)         
+            createCostFireDropdown(firePolygons);
 
 		};
 	};   // end of setMap()
@@ -296,21 +296,22 @@
 	// function to create a dropdown menu for attribute selection for cost fire polys
 	function createCostFireDropdown(firePolygons) {
 		//add select element
-		var dropdown = d3.select(".cost-dropdown")
+		var costDropdown = d3.select(".cost-dropdown")
 			.append("select")
 			.attr("class", "dropdown")
 			.on("change", function(){
-				changeAttribute(this.value, firePolygons)
+				// changeAttribute(this.value, firePolygons)
+				console.log("CHANGEDEDEDED");
 			});
 
 		//add initial option
-		var titleOption = dropdown.append("option")
+		var titleOption = costDropdown.append("option")
 			.attr("class", "titleOption")
 			.attr("disabled", "true")
 			.text("Select Damage");
 
 		//add attribute name options
-		var attrOptionsCost = dropdown.selectAll("attrOptionsCost")
+		var attrOptionsCost = costDropdown.selectAll("attrOptionsCost")
 			.data(costAttrArray)
 			.enter()
 			.append("option")
