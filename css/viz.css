@@ -28,6 +28,11 @@
     stroke-linecap: round;
 }
 
+.firePolygons {
+    stroke: #000;
+    stroke-width: 1px;
+    stroke-linecap: round;
+}
 .chart {
     float: right;
     margin: 7px 20px 0 0;
@@ -163,50 +168,65 @@ option {
     width: 25%;
     display: flex;
     flex-direction: column;
-    background-color: #e0c7b6;
+    background-color: #e5d9d5;
     border-color: #444444;
     border-style: solid;
     border-width: thin;
     height: 100%;
 }
-
-.accordionSection1 {
+.accordionTopHeader {
     margin-top: 5px;
-    background-color: #e0c7b6;
-    color: #444;
+    background-color:#42332a;
+    color: white;
     cursor: pointer;
     padding: 18px;
     width: 100%;
     text-align: left;
     outline: none;
-    font-size: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.4s;
+}
+
+.accordionSection1 {
+    margin-top: 5px;
+    background-color:#42332a;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
     transition: 0.4s;
 }
 .accordionSection2 {
     margin-top: 5px;
-    background-color: #e0c7b6;
-    color: #444;
+    background-color: #42332a;
+    color: white;
     cursor: pointer;
     padding: 18px;
     width: 100%;
     text-align: left;
     outline: none;
-    font-size: 15px;
+    font-size: 18px;
+    font-weight: bold;
     transition: 0.4s;
 }
 
 
 .active, .accordionSection1:hover {
-    background-color: #e0c7b6;
+    background-color: #42332a;
 }
 
 .active, .accordionSection2:hover {
-    background-color: #e0c7b6;
+    background-color: #42332a;
 }
 
 .panel {
     padding: 0 18px;
-    background-color: #e0c7b6;
+    background-color: #e5d9d5;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
@@ -216,6 +236,7 @@ option {
 .panel p {
     color: #444;
 }
+
 
 .map-container {
     flex: 2;
