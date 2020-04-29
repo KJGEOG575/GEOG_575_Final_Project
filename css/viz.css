@@ -38,13 +38,25 @@
     margin: 7px 20px 0 0;
 }
 
+.chartCost {
+    float: right;
+    margin: 7px 20px 0 0;
+}
 .chartTitle {
+    font-family: sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+}
+.chartTitleCost {
     font-family: sans-serif;
     font-size: 1em;
     font-weight: bold;
 }
 
 .chartBackground {
+    fill: transparent;
+}
+.chartBackgroundCost {
     fill: transparent;
 }
 
@@ -54,7 +66,12 @@
     stroke-width: 0;
     shape-rendering: crispEdges;
 }
-
+.chartFrameCost {
+    fill: none;
+    stroke: #999;
+    stroke-width: 0;
+    shape-rendering: crispEdges;
+}
 .axis path,
 .axis line {
     fill: none;
@@ -108,9 +125,9 @@ option {
     position: absolute;
     height: 50px;
     min-width: 100px;
-    color: #5d5d89;
-    background-color: #fff5f0;
-    border: solid medium #fc9272;
+    color: #67a9cf;
+    background-color: #f6eff7;
+    border: solid medium #02818a;
     border-radius: 10px;
     padding: 5px 10px;
     top: -75px;
@@ -246,7 +263,9 @@ option {
 .chart-container {
     flex: 1;
 }
-
+.chart-containerCost {
+    flex: 2;
+}
 #map-dropdown {
     margin: 10px 0 0 10px;
 }
