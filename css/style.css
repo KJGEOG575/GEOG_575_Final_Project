@@ -3,6 +3,13 @@ body {
     font-family: "Lato", sans-serif;
 }
 
+.navbar {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 5000;
+}
+
 .header {
     background: #0f421d;
     color: #FFE363;
