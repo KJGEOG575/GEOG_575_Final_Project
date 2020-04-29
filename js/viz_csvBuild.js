@@ -130,7 +130,7 @@
 			setChart(csvData, colorScale);
             
             //add coordinated viz to map for fire polygons in the cost category
-			/*setChartFire(csvfireData, colorScale);*/
+			setChartCost(csvfireData, colorScaleCost);
 
 			createDropdown(csvData);
                     
@@ -144,7 +144,7 @@
 	};   // end of setMap()
 
 	//function to create color scale generator for states
-	function makeColorScale(data) {
+	function makeColorScale(data1) {
 		var colorClasses = [
         "#FEF0D9",
         "#FDCC8A",
@@ -158,8 +158,8 @@
 
 		// build array of all values of the expressed attribute
 		var domainArray = [];
-		for (var i=0; i < data.length; i++){
-			var val = parseFloat(data[i][expressed]);
+		for (var i=0; i < data1.length; i++){
+			var val = parseFloat(data1[i][expressed]);
 			domainArray.push(val);
 		};
 
@@ -180,12 +180,11 @@
 	};
     
 	//function to create color scale generator for fire polygons
-	function makeColorScaleCost(data) {
+	function makeColorScaleCost(data2) {
 		var colorClassesCost = [        
-        "#f6eff7",
-        "#bdc9e1",
-        "#67a9cf",
-        "#02818a"
+        "#e5f5f9",
+        "#99d8c9",
+        "#2ca25f"
 		];
 
 		// create color scale generator
@@ -194,8 +193,8 @@
 
 		// build array of all values of the expressed attribute
 		var domainArrayCost = [];
-		for (var j=0; j < data.length; j++){
-			var costVal = parseFloat(data[j][costExpressed]);
+		for (var j=0; j < data2.length; j++){
+			var costVal = parseFloat(data2[j][costExpressed]);
 			domainArrayCost.push(costVal);
 		};
 
@@ -347,16 +346,16 @@
 			.style("fill", function (d) {
 				return choroplethFire(d.properties, colorScaleCost);
 		})
-/*			.on("mouseover", function (d) {
-				highlight(d.properties);
+			.on("mouseover", function (d) {
+				highlightCost(d.properties);
 			})
 			.on("mouseout", function (d) {
-				dehighlight(d.properties);
+				dehighlightCost(d.properties);
 		})
-			.on("mousemove", moveLabel);
+			.on("mousemove", moveLabelCost);
 
-		var desc = states.append("desc")
-			.text('{"stroke": "#000", "stroke-width": "0.5px"}');*/
+		var descCost = fires.append("descCost")
+			.text('{"stroke": "#000", "stroke-width": "0.5px"}');
 	};
 
     
@@ -398,14 +397,14 @@
 	};
     
     //function to test for data value and return color for fire polygons
-	function choroplethFire(props2, colorScaleCost) {
+	function choroplethFire(propsCost, colorScaleCost) {
 		//make sure attribute value is a number
-		var valCost = parseFloat(props2[costExpressed]);
+		var valCost = parseFloat(propsCost[costExpressed]);
 		//if attribute value exists, assign a color, otherwise assign gray
 		if (typeof valCost == 'number' && !isNaN(valCost)) {
 			return colorScaleCost(valCost);
 		} else {
-			return "#CCC";
+			return "#525252";
 		};
 	};
 
@@ -516,9 +515,24 @@
 			.style("fill", function(d){
 				return choroplethFire(d.properties, colorScaleCost)
 			});
+        //re-sort, resize, and recolor bars for fire polygons
+		var barsCost = d3.selectAll(".barCost")
+			//re-sort bars
+			.sort(function(w, x){
+				return x[costExpressed] - w[costExpressed];
+			})
+			.transition() // add animation
+			.delay(function(y, z) {
+				return z * 20
+			})
+			.duration(500);
+
+			// });
+
+		updateChartCost(barsCost, csvfireData.length, colorScaleCost)
 
 	};
-
+    //function update chart bars for states
 	function updateChart(bars, n, colorScale) {
 		// position bars
 		bars.attr("x", function(d, i){
@@ -685,7 +699,171 @@
 	};
 
 
+    //function update chart bars for cost fire poly
+	function updateChartCost(barsCost, c, colorScaleCost) {
+		// position bars
+		barsCost.attr("x", function(y, z){
+			return z * (chartInnerWidth_F / c) + leftPadding_F;
+		})
+		//resize bars
+		.attr("height", function(y, z){
+			console.log(y[costExpressed]);
+			return 463 - yScale_F(parseFloat(c[costExpressed]));
+		})
+		.attr("y", function(y, z){
+			return yScale_F(parseFloat(y[costExpressed])) + topBottomPadding_F;
+		})
+		//recolor bars
+		.style("fill", function(d){
+			return choroplethFire(d, colorScaleCost);
+		});
 
+		var chartTitleCost = d3.select(".chartTitleCost")
+            .text (costExpressed.replace(/_/g, " ") + "\n Insert Chart title here");
+			
+	};
+
+//function to create coordinated bar chart for cost fire poly
+	function setChartCost(csvfireData, colorScaleCost){
+		//create a second svg element to hold the bar chart
+		var chartCost = d3.select("#chart-containerCost")
+			.append("svg")
+			.attr("width", chartWidth_F)
+			.attr("height", chartHeight_F)
+			.attr("class", "chartCost");
+
+		//create a rectangle for chart background fill for cost fire poly
+		var chartBackgroundCost = chartCost.append("rect")
+			.attr("class", "chartBackgroundCost")
+			.attr("width", chartInnerWidth_F)
+			.attr("height", chartInnerHeight_F)
+			.attr("transform", translate_F);
+
+
+
+		//set bars for each cost fire poly
+		var barsCost = chartCost.selectAll(".barCost")
+			.data(csvfireData)
+			.enter()
+			.append("rect")
+			.sort(function(w, x){
+				return x[costExpressed]-w[costExpressed]
+			})
+			.attr("class", function(d){
+				return "bar " + d.fire_name;
+			})
+			.attr("width", chartInnerWidth_F / csvfireData.length -1)
+			.on("mouseover", highlightCost)
+			.on("mouseout", dehighlightCost)
+			.on("mousemove", moveLabelCost);
+
+
+		//create a text element for the chart title cost fire poly
+		var chartTitleCost = chartCost.append("text")
+			.attr("x", 100)
+			.attr("y", 30)
+			.attr("class", "chartTitleCost");
+
+
+		//create vertical axis generator
+		var yAxisCost = d3.axisLeft()
+			.scale(yScale_F);
+        
+    
+
+		//place axis
+		var axisCost = chartCost.append("g")
+			.attr("class", "axisCost")
+			.attr("transform", translate_F)
+			.call(yAxisCost);
+
+		//create frame for chart border
+		var chartFrameCost = chartCost.append("rect")
+			.attr("class", "chartFrameCost")
+			.attr("width", chartInnerWidth_F)
+			.attr("height", chartInnerHeight_F)
+			.attr("transform", translate_F);
+
+		var descCost = barsCost.append("descCost")
+			.text('{"stroke": "none", "stroke-width": "0px"}');
+
+		updateChartCost(barsCost, csvfireData.length, colorScaleCost);
+	};
+
+	//function to highlight enumeration units and bars in cost fire poly
+	function highlightCost(propsCost){
+		//change stroke
+		var selectedCost = d3.selectAll("." + propsCost.fire_name)
+			.style("stroke", "blue")
+			.style("stroke-width", "2");
+
+		setLabelCost(propsCost);
+	};
+
+	function dehighlightCost(propsCost) {
+		var selectedCost = d3.selectAll("." + propsCost.fire_name)
+			.style("stroke", function () {
+				return getStyleCost(this, "stroke")
+			})
+			.style("stroke-width", function () {
+				return getStyleCost(this, "stroke-width")
+			});
+
+		function getStyleCost(elementCost, styleNameCost) {
+			var styleTextCost = d3.select(elementCost)
+				.select("descCost")
+				.text();
+
+			var styleObjectCost = JSON.parse(styleTextCost);
+
+			return styleObjectCost[styleNameCost];
+		};
+
+		d3.select(".firelabel")
+			.remove();
+	};
+
+	//function to create dynamic label for fire polygons
+	function setLabelCost(propsCost){
+		//label content
+		var labelAttributeCost = "<h2>" + propsCost[costExpressed] +
+			"</h2><b>" + costExpressed + "</b>";
+
+		//create info label div
+		var infolabelCost = d3.select("body")
+			.append("div")
+			.attr("class", "firelabel")
+			.attr("id", propsCost.fire_name + "_label")
+			.html(labelAttributeCost);
+
+		var fireName = infolabelCost.append("div")
+			.attr("class", "labelnameCost")
+			.html(propsCost.fire_name);
+	};
+
+	//function to move label with mouse
+	function moveLabelCost(){
+		//get width of label
+		var labelWidthCost = d3.select(".firelabel")
+			.node()
+			.getBoundingClientRect()
+			.width;
+
+		//use coordinates of mousemove event to set label coordinates
+		var x1Cost = d3.event.clientX + 10,
+			y1Cost = d3.event.clientY - 75,
+			x2Cost = d3.event.clientX - labelWidthCost - 10,
+			y2Cost = d3.event.clientY + 25;
+
+		//horizontal label coordinate, testing for overflow
+		var xCost = d3.event.clientX > window.innerWidth - labelWidthCost - 20 ? x2Cost : x1Cost;
+		//vertical label coordinate, testing for overflow
+		var yCost = d3.event.clientY < 75 ? y2Cost : y1Cost;
+
+		d3.select(".firelabel")
+			.style("left", xCost + "px")
+			.style("top", yCost + "px");
+	};
 
 
 
