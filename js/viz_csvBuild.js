@@ -5,7 +5,7 @@
     var attrArray = ["2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010"];
     
     //Array for reading the 3 cost related columns of the fire data.csv
-    var costAttrArray = ["Structures", "Fatalities", "Economic_C"];
+    var costAttrArray = ["Structures", "Fatalities", "Economic_Cost"];
 
     var expressed = attrArray[0]; //initial attribute of the states acreage data
     var costExpressed = costAttrArray[0]; //initial attribute of the fire damage cost data
@@ -21,14 +21,14 @@
 		translate_S = "translate(" + leftPadding_S + "," + topBottomPadding_S + ")";
     
     //chart frame dimensions for the fire polygons relating to cost chart in Section 2
-/*	var chartWidth_F = window.innerWidth * 0.25,
+	var chartWidth_F = window.innerWidth * 0.25,
 		chartHeight_F = 500,
 		leftPadding_F = 35,
 		rightPadding_F = 2,
 		topBottomPadding_F = 5,
 		chartInnerWidth_F = chartWidth_F - leftPadding_F - rightPadding_F,
 		chartInnerHeight_F = chartHeight_F - topBottomPadding_F * 2,
-		translate_F = "translate(" + leftPadding_F + "," + topBottomPadding_F + ")";*/
+		translate_F = "translate(" + leftPadding_F + "," + topBottomPadding_F + ")";
 
 	//create a scale to size bars proportionally to frame and for axis
 	var yScale_S = d3.scaleLinear()
@@ -36,9 +36,9 @@
 		.domain([0, 3000]);
     
     //create a scale to size bars proportionally to frame and for axis
-/*	var yScale_F = d3.scaleLinear()
+	var yScale_F = d3.scaleLinear()
 		.range([463, 0])
-		.domain([0, 3000]);*/
+		.domain([0, 2000]);
 
 
 	var zoomSettings = {
@@ -181,11 +181,11 @@
     
 	//function to create color scale generator for fire polygons
 	function makeColorScaleCost(data) {
-		var colorClassesCost = [
-        "#edf8e9",
-        "#bae4b3",
-        "#74c476",
-        "#238b45"
+		var colorClassesCost = [        
+        "#f6eff7",
+        "#bdc9e1",
+        "#67a9cf",
+        "#02818a"
 		];
 
 		// create color scale generator
@@ -308,7 +308,7 @@
 
 		return firePolygons;
 	};
-
+    //function to set the color classes and draw the states
 	function setEnumerationUnits(selectStates, map, path, colorScale){
 		var states = map.selectAll(".selectStates")
 			.data(selectStates)
@@ -333,21 +333,21 @@
 		var desc = states.append("desc")
 			.text('{"stroke": "#000", "stroke-width": "0.5px"}');
 	};
-
-/*	function toggleFires(path, map, firePolygons,colorScaleCost){
-		var fires = map.selectAll(".fire-polygons")
+    //define function to toggle fire polygons 
+	function toggleFires(path, map, firePolygons,colorScaleCost){
+		var fires = map.selectAll(".firePolygons")
 			.data(firePolygons)
 			.enter()
 			.append("path")
 			.attr("class", function (d) {
-				return "fire-polygons " + d.properties.fire_name;
+				return "firePolygons " + d.properties.fire_name;
 			})
 			.attr("d", path)
             .attr("opacity", 0)
 			.style("fill", function (d) {
 				return choroplethFire(d.properties, colorScaleCost);
 		})
-			.on("mouseover", function (d) {
+/*			.on("mouseover", function (d) {
 				highlight(d.properties);
 			})
 			.on("mouseout", function (d) {
@@ -356,11 +356,12 @@
 			.on("mousemove", moveLabel);
 
 		var desc = states.append("desc")
-			.text('{"stroke": "#000", "stroke-width": "0.5px"}');
-	};*/
+			.text('{"stroke": "#000", "stroke-width": "0.5px"}');*/
+	};
 
     
         //define function to toggle fire polygons 
+/*
         function toggleFires(path, map, firePolygons,colorScaleCost) {
            var fires = map.append("g");
             
@@ -381,6 +382,7 @@
            console.log(fires);
         };
 
+*/
 
 
 	//function to test for data value and return color for states
