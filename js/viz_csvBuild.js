@@ -723,28 +723,6 @@
 			
 	};
 
-	// function updateChart(bars, n, colorScale) {
-	// 	// position bars
-	// 	bars.attr("x", function(d, i){
-	// 		return i * (chartInnerWidth_S / n) + leftPadding_S;
-	// 	})
-	// 		//resize bars
-	// 		.attr("height", function(d, i){
-	// 			console.log(d[expressed]);
-	// 			return 463 - yScale_S(parseFloat(d[expressed]));
-	// 		})
-	// 		.attr("y", function(d, i){
-	// 			return yScale_S(parseFloat(d[expressed])) + topBottomPadding_S;
-	// 		})
-	// 		//recolor bars
-	// 		.style("fill", function(d){
-	// 			return choropleth(d, colorScale);
-	// 		});
-	//
-	// 	var chartTitle = d3.select(".chartTitle")
-	// 		.text (expressed.replace(/_/g, " ") + "\n Wildfire Destruction in Total square miles");
-	// 	/*.text(expressed.replace(/_/g, " "));*/
-	// };
 
 //function to create coordinated bar chart for cost fire poly
 	function setChartCost(csvfireData, colorScaleCost){
@@ -773,7 +751,7 @@
 				return b[costExpressed]-a[costExpressed]
 			})
 			.attr("class", function(d){
-				return "bar " + d.fire_name;
+				return "barCost " + d.fire_name;
 			})
 			.attr("width", chartInnerWidth_F / csvfireData.length -1)
 			.on("mouseover", highlightCost)
