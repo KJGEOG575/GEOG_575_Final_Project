@@ -144,7 +144,7 @@
 	};   // end of setMap()
 
 	//function to create color scale generator for states
-	function makeColorScale(data1) {
+	function makeColorScale(dataState) {
 		var colorClasses = [
         "#FEF0D9",
         "#FDCC8A",
@@ -158,8 +158,8 @@
 
 		// build array of all values of the expressed attribute
 		var domainArray = [];
-		for (var i=0; i < data1.length; i++){
-			var val = parseFloat(data1[i][expressed]);
+		for (var i=0; i < dataState.length; i++){
+			var val = parseFloat(dataState[i][expressed]);
 			domainArray.push(val);
 		};
 
@@ -180,7 +180,7 @@
 	};
     
 	//function to create color scale generator for fire polygons
-	function makeColorScaleCost(data2) {
+	function makeColorScaleCost(dataCost) {
 		var colorClassesCost = [        
         "#e5f5f9",
         "#99d8c9",
@@ -193,8 +193,8 @@
 
 		// build array of all values of the expressed attribute
 		var domainArrayCost = [];
-		for (var j=0; j < data2.length; j++){
-			var costVal = parseFloat(data2[j][costExpressed]);
+		for (var j=0; j < dataCost.length; j++){
+			var costVal = parseFloat(dataCost[j][costExpressed]);
 			domainArrayCost.push(costVal);
 		};
 
