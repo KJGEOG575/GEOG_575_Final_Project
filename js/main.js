@@ -41,6 +41,26 @@ function initialize(){
         $headerDropdownMenu.slideToggle();
     });
 
+
+    var accHead = document.getElementsByClassName("accordionTopHeader");
+    var i;
+
+    for (i = 0; i < accHead.length; i++) {
+        accHead[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+                
+                
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+                
+                
+            }
+        });
+}
+
     var acc1 = document.getElementsByClassName("accordionSection1");
     var i;
 
@@ -70,12 +90,12 @@ function initialize(){
             var panel = this.nextElementSibling;
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
-                d3.selectAll(".fire-polygons").attr("opacity", 0);
+                d3.selectAll(".firePolygons").attr("opacity", 0);
             } else {
                 panel.style.maxHeight = panel.scrollHeight + "px";
-                d3.selectAll(".fire-polygons").attr("opacity", 1);
+                d3.selectAll(".firePolygons").attr("opacity", 1);
             }
         });
 }};
 
-$(document).ready(initialize); 
+$(document).ready(initialize);
