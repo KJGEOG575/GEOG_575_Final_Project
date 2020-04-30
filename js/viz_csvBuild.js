@@ -5,7 +5,7 @@
     var attrArray = ["2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010"];
     
     //Array for reading the 3 cost related columns of the fire data.csv
-    var costAttrArray = ["Structures", "Fatalities", "Economic_Cost"];
+    var costAttrArray = ["Structures", "Evacuated_Thousands", "Cost_Millions"];
 
     var expressed = attrArray[0]; //initial attribute of the states acreage data
     var costExpressed = costAttrArray[0]; //initial attribute of the fire damage cost data
@@ -38,7 +38,7 @@
     //create a scale to size bars proportionally to frame and for axis
 	var yScale_F = d3.scaleLinear()
 		.range([463, 0])
-		.domain([0, 2000]);
+		.domain([0, 2500]);
 
 
 	var zoomSettings = {
@@ -182,9 +182,9 @@
 	//function to create color scale generator for fire polygons
 	function makeColorScaleCost(dataCost) {
 		var colorClassesCost = [        
-        "#e5f5f9",
+        "#f7fcfd",
         "#99d8c9",
-        "#2ca25f"
+        "#00441b"
 		];
 
 		// create color scale generator
@@ -719,7 +719,7 @@
 		});
 
 		var chartTitleCost = d3.select(".chartTitleCost")
-            .text (costExpressed.replace(/_/g, " ") + "\n Insert Chart title here");
+            .text ("Total " + costExpressed.replace(/_/g, " in "));
 			
 	};
 
@@ -761,7 +761,7 @@
 
 		//create a text element for the chart title cost fire poly
 		var chartTitleCost = chartCost.append("text")
-			.attr("x", 100)
+			.attr("x", 200)
 			.attr("y", 30)
 			.attr("class", "chartTitleCost");
 
