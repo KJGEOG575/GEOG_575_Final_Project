@@ -700,18 +700,18 @@
 
 
     //function update chart bars for cost fire poly
-	function updateChartCost(barsCost, c, colorScaleCost) {
+	function updateChartCost(barsCost, n, colorScaleCost) {
 		// position bars
-		barsCost.attr("x", function(y, z){
-			return z * (chartInnerWidth_F / c) + leftPadding_F;
+		barsCost.attr("x", function(d, i){
+			return i * (chartInnerWidth_F / n) + leftPadding_F;
 		})
 		//resize bars
-		.attr("height", function(y, z){
-			console.log(y[costExpressed]);
-			return 463 - yScale_F(parseFloat(c[costExpressed]));
+		.attr("height", function(d, i){
+			console.log(d[costExpressed]);
+			return 463 - yScale_F(parseFloat(d[costExpressed]));
 		})
-		.attr("y", function(y, z){
-			return yScale_F(parseFloat(y[costExpressed])) + topBottomPadding_F;
+		.attr("y", function(d, i){
+			return yScale_F(parseFloat(d[costExpressed])) + topBottomPadding_F;
 		})
 		//recolor bars
 		.style("fill", function(d){
@@ -722,6 +722,29 @@
             .text (costExpressed.replace(/_/g, " ") + "\n Insert Chart title here");
 			
 	};
+
+	// function updateChart(bars, n, colorScale) {
+	// 	// position bars
+	// 	bars.attr("x", function(d, i){
+	// 		return i * (chartInnerWidth_S / n) + leftPadding_S;
+	// 	})
+	// 		//resize bars
+	// 		.attr("height", function(d, i){
+	// 			console.log(d[expressed]);
+	// 			return 463 - yScale_S(parseFloat(d[expressed]));
+	// 		})
+	// 		.attr("y", function(d, i){
+	// 			return yScale_S(parseFloat(d[expressed])) + topBottomPadding_S;
+	// 		})
+	// 		//recolor bars
+	// 		.style("fill", function(d){
+	// 			return choropleth(d, colorScale);
+	// 		});
+	//
+	// 	var chartTitle = d3.select(".chartTitle")
+	// 		.text (expressed.replace(/_/g, " ") + "\n Wildfire Destruction in Total square miles");
+	// 	/*.text(expressed.replace(/_/g, " "));*/
+	// };
 
 //function to create coordinated bar chart for cost fire poly
 	function setChartCost(csvfireData, colorScaleCost){
@@ -746,8 +769,8 @@
 			.data(csvfireData)
 			.enter()
 			.append("rect")
-			.sort(function(w, x){
-				return x[costExpressed]-w[costExpressed]
+			.sort(function(a, b){
+				return b[costExpressed]-a[costExpressed]
 			})
 			.attr("class", function(d){
 				return "bar " + d.fire_name;
