@@ -757,13 +757,7 @@
 			.attr("width", chartInnerWidth_F / csvfireData.length -1)
 			.on("mouseover", highlightCost)
 			.on("mouseout", dehighlightCost)
-			.on("mousemove", moveLabelCost)
-			.on("click", function () {
-				console.log("clientX : " + event.clientX);
-				console.log("clientY : " + event.clientX);
-				console.log("label top: " + $(".fireLabel").css("top"));
-				console.log("label left:" + $(".firelabel").css("left"));
-			});
+			.on("mousemove", moveLabelCost);
 
 
 
