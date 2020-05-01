@@ -96,6 +96,38 @@ function initialize(){
                 d3.selectAll(".firePolygons").attr("opacity", 1);
             }
         });
-}};
+}
+
+    window.onload = function(){
+        var ilDiv = document.getElementsByClassName("infolabel");
+        var x, y;
+        // On mousemove use event.clientX and event.clientY to set the location of the div to the location of the cursor:
+        window.addEventListener('mousemove', function(event){
+            x = event.clientX;
+            y = event.clientY;
+            if ( typeof x !== 'undefined' ){
+                ilDiv.style.left = x + "px";
+                ilDiv.style.top = y + "px";
+            }
+        }, false);
+    }
+
+    window.onload = function(){
+        var flDiv = document.getElementsByClassName("firelabel");
+        var x, y;
+        // On mousemove use event.clientX and event.clientY to set the location of the div to the location of the cursor:
+        window.addEventListener('mousemove', function(event){
+            x = event.clientX;
+            y = event.clientY;
+            if ( typeof x !== 'undefined' ){
+                flDiv.style.left = x + "px";
+                flDiv.style.top = y + "px";
+            }
+        }, false);
+    }
+
+
+
+};
 
 $(document).ready(initialize);
