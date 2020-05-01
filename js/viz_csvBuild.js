@@ -667,7 +667,8 @@
 			.append("div")
 			.attr("class", "infolabel")
 			.attr("id", props.adm1_code + "_label")
-			.html(labelAttribute);
+			.html(labelAttribute)
+			.style("position", "fixed");
 
 		var stateName = infolabel.append("div")
 			.attr("class", "labelname")
@@ -756,7 +757,14 @@
 			.attr("width", chartInnerWidth_F / csvfireData.length -1)
 			.on("mouseover", highlightCost)
 			.on("mouseout", dehighlightCost)
-			.on("mousemove", moveLabelCost);
+			.on("mousemove", moveLabelCost)
+			.on("click", function () {
+				console.log("clientX : " + event.clientX);
+				console.log("clientY : " + event.clientX);
+				console.log("label top: " + $(".fireLabel").css("top"));
+				console.log("label left:" + $(".firelabel").css("left"));
+			});
+
 
 
 		//create a text element for the chart title cost fire poly
@@ -831,11 +839,17 @@
 			"</h2><b>" + costExpressed + "</b>";
 
 		//create info label div
-		var infolabelCost = d3.select("body")
+		var infolabelCost = d3.select(".main-container")
 			.append("div")
 			.attr("class", "firelabel")
 			.attr("id", propsCost.fire_name + "_label")
-			.html(labelAttributeCost);
+			.html(labelAttributeCost)
+			.style("position", "fixed");
+
+			// .style("top", "700px")
+			// .style("left", "450px")
+			// .style("position", "fixed");
+
 
 		var fireName = infolabelCost.append("div")
 			.attr("class", "labelnameCost")
@@ -843,7 +857,7 @@
 	};
 
 	//function to move label with mouse
-	function moveLabelCost(){
+	 function moveLabelCost(){
 		//get width of label
 		var labelWidthCost = d3.select(".firelabel")
 			.node()
